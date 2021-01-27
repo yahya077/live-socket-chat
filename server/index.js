@@ -24,8 +24,8 @@ const port = process.env.PORT || "3000";
 app.set("port", port);
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);
