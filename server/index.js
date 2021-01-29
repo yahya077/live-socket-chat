@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const logger = require('morgan');
@@ -5,6 +6,8 @@ const cors = require('cors');
 
 // mongo connection
 require('../config/database');
+// socket configuration
+const WebSockets = require('../config/WebSockets');
 
 
 // routes
@@ -42,6 +45,10 @@ app.use('*', (req, res) => {
 
 /** Create HTTP server. */
 const server = http.createServer(app);
+/** Create socket connection */
+global.io = require('socket.io')(server);
+
+global.io.on('connection', WebSockets.connection);
 /** Listen on provided port, on all network interfaces. */
 server.listen(port);
 /** Event listener for HTTP server "listening" event. */
